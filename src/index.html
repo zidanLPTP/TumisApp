@@ -10,12 +10,19 @@
     <div class="crt-screen dithered-bg">
       
       <!-- Header Aplikasi -->
-      <div class="panel-header" style="border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 15px;">
-        <div style="display: flex; align-items: center; gap: 8px;">
+      <div class="panel-header" data-tauri-drag-region style="border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 15px; cursor: move;">
+        <div data-tauri-drag-region style="display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 20px;">💾</span>
           <span style="font-size: 20px; font-weight: bold; letter-spacing: 2px;">T U M I S</span>
         </div>
-        <div style="background: #1a1a1a; color: #f7f4eb; padding: 2px 8px; font-size: 10px;">SYS_STATUS: ONLINE</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="background: #1a1a1a; color: #f7f4eb; padding: 2px 8px; font-size: 10px;">SYS_STATUS: ONLINE</div>
+          <!-- Retro Window Controls -->
+          <div style="display: flex; gap: 4px;">
+            <button id="btn-win-minimize" class="btn-retro" style="padding: 2px 6px; font-size: 9px; font-weight: bold; background: var(--accent-primary);">_</button>
+            <button id="btn-win-close" class="btn-retro" style="padding: 2px 6px; font-size: 9px; font-weight: bold; background: var(--accent-secondary); color: #fff;">X</button>
+          </div>
+        </div>
       </div>
 
       <!-- Bento Grid Dasbor -->
@@ -103,6 +110,22 @@
     // Initialize Music Player
     const player = new MusicPlayer(document.getElementById('music-container'), eventBroker);
     window.player = player;
+
+    // Borderless Window controls
+    if (window.__TAURI__) {
+      const { getCurrentWindow } = window.__TAURI__.window;
+      const appWindow = getCurrentWindow();
+      
+      document.getElementById('btn-win-minimize').addEventListener('click', () => {
+        appWindow.minimize();
+      });
+      document.getElementById('btn-win-close').addEventListener('click', () => {
+        appWindow.close();
+      });
+    } else {
+      document.getElementById('btn-win-minimize').addEventListener('click', () => console.log("Window Minimize"));
+      document.getElementById('btn-win-close').addEventListener('click', () => console.log("Window Close"));
+    }
   </script>
 </body>
 </html>
