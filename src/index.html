@@ -2,9 +2,64 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Tumis</title>
+  <title>Tumis (Tugas, Waktu dan Musik)</title>
+  <link rel="stylesheet" href="index.css">
 </head>
-<body style="background: #f7f4eb; font-family: monospace;">
-  <h1>Tumis System Online</h1>
+<body>
+  <div class="pc-bezel">
+    <div class="crt-screen dithered-bg">
+      
+      <!-- Header Aplikasi -->
+      <div class="panel-header" style="border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 15px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">💾</span>
+          <span style="font-size: 20px; font-weight: bold; letter-spacing: 2px;">T U M I S</span>
+        </div>
+        <div style="background: #1a1a1a; color: #f7f4eb; padding: 2px 8px; font-size: 10px;">SYS_STATUS: ONLINE</div>
+      </div>
+
+      <!-- Bento Grid Dasbor -->
+      <div class="bento-grid">
+        
+        <!-- Kolom 1: Kanban (TUGAS.EXE) -->
+        <div class="terminal-panel" id="kanban-panel">
+          <div class="panel-header">
+            <span>📁 TUGAS.EXE</span>
+            <span class="panel-badge" style="background: var(--accent-primary); color: var(--color-text);">KANBAN</span>
+          </div>
+          <div id="kanban-container" style="flex-grow: 1; display: flex; flex-direction: column;">
+            <!-- Kanban Board will render here -->
+            <div style="font-size: 11px; text-align: center; padding: 20px; color: #888;">Memuat Papan Kanban...</div>
+          </div>
+        </div>
+
+        <!-- Kolom 2: Pomodoro (WAKTU.SYS) -->
+        <div class="terminal-panel" id="timer-panel">
+          <div class="panel-header">
+            <span>⏱️ WAKTU.SYS</span>
+            <span class="panel-badge">POMODORO</span>
+          </div>
+          <div id="timer-container" style="flex-grow: 1; display: flex; flex-direction: column;">
+            <!-- Timer will render here -->
+            <div style="font-size: 11px; text-align: center; padding: 20px; color: #888;">Memuat Timer...</div>
+          </div>
+        </div>
+
+        <!-- Kolom 3: Musik & Downloader (AUDIO.DLL) -->
+        <div class="terminal-panel" id="music-panel">
+          <div class="panel-header">
+            <span>🎵 AUDIO.DLL</span>
+            <span class="panel-badge" style="background: var(--color-active); color: var(--color-text);">ONLINE</span>
+          </div>
+          <div id="music-container" style="flex-grow: 1; display: flex; flex-direction: column;">
+            <!-- Music Player will render here -->
+            <div style="font-size: 11px; text-align: center; padding: 20px; color: #888;">Memuat Musik...</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
