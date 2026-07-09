@@ -1,0 +1,12 @@
+{
+  "name": "tumis",
+  "version": "1.0.0",
+  "description": "Tugas, Waktu, Musik - Y2K Desktop App",
+  "main": "src/index.html",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}
