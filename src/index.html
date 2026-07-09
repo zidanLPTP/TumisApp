@@ -61,5 +61,36 @@
 
     </div>
   </div>
+
+  <script type="module">
+    import { KanbanBoard, runKanbanTests } from './kanban.js';
+
+    // Run self-tests
+    try {
+      runKanbanTests();
+    } catch (e) {
+      console.error("Test failed: ", e);
+    }
+
+    // Simple Event Broker
+    const eventBroker = {
+      listeners: {},
+      subscribe(event, callback) {
+        if (!this.listeners[event]) this.listeners[event] = [];
+        this.listeners[event].push(callback);
+      },
+      publish(event, data) {
+        if (this.listeners[event]) {
+          this.listeners[event].forEach(cb => cb(data));
+        }
+      }
+    };
+
+    window.eventBroker = eventBroker;
+
+    // Initialize Kanban
+    const kanban = new KanbanBoard(document.getElementById('kanban-container'), eventBroker);
+    window.kanban = kanban;
+  </script>
 </body>
 </html>
