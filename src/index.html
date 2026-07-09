@@ -122,6 +122,18 @@
       document.getElementById('btn-win-close').addEventListener('click', () => {
         appWindow.close();
       });
+
+      // Custom window dragging logic for the TV casing
+      const bezel = document.querySelector('.pc-bezel');
+      bezel.addEventListener('mousedown', (e) => {
+        if (e.buttons === 1) {
+          // Ignore clicks on interactive controls so they work normally
+          const interactive = e.target.closest('button, input, select, textarea, a, [draggable="true"], .delete-task-btn, .task-item, .playlist-item, #volume-slider, input[type="range"]');
+          if (!interactive) {
+            appWindow.startDragging();
+          }
+        }
+      });
     } else {
       document.getElementById('btn-win-minimize').addEventListener('click', () => console.log("Window Minimize"));
       document.getElementById('btn-win-close').addEventListener('click', () => console.log("Window Close"));
