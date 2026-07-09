@@ -65,11 +65,13 @@
   <script type="module">
     import { KanbanBoard, runKanbanTests } from './kanban.js';
     import { PomodoroTimer, runTimerTests } from './timer.js';
+    import { MusicPlayer, runPlayerTests } from './audio.js';
 
     // Run self-tests
     try {
       runKanbanTests();
       runTimerTests();
+      runPlayerTests();
     } catch (e) {
       console.error("Test failed: ", e);
     }
@@ -97,6 +99,10 @@
     // Initialize Timer
     const timer = new PomodoroTimer(document.getElementById('timer-container'), eventBroker);
     window.timer = timer;
+
+    // Initialize Music Player
+    const player = new MusicPlayer(document.getElementById('music-container'), eventBroker);
+    window.player = player;
   </script>
 </body>
 </html>
