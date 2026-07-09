@@ -301,3 +301,14 @@ body {
   50%, 100% { opacity: 0; }
 }
 
+.lcd-screen {
+  background: #0d120d;
+  border: 3px solid #1a1a1a;
+  border-radius: 6px;
+  padding: 10px;
+  color: #ff3838; /* neon red */
+  text-shadow: 0 0 8px rgba(255, 56, 56, 0.7);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+

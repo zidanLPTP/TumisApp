@@ -64,10 +64,12 @@
 
   <script type="module">
     import { KanbanBoard, runKanbanTests } from './kanban.js';
+    import { PomodoroTimer, runTimerTests } from './timer.js';
 
     // Run self-tests
     try {
       runKanbanTests();
+      runTimerTests();
     } catch (e) {
       console.error("Test failed: ", e);
     }
@@ -91,6 +93,10 @@
     // Initialize Kanban
     const kanban = new KanbanBoard(document.getElementById('kanban-container'), eventBroker);
     window.kanban = kanban;
+
+    // Initialize Timer
+    const timer = new PomodoroTimer(document.getElementById('timer-container'), eventBroker);
+    window.timer = timer;
   </script>
 </body>
 </html>
