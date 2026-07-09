@@ -77,7 +77,8 @@ Papan Kanban dibagi menjadi 3 kolom vertikal berdampingan:
   - **Status Play**: Jarum bergerak mulus ke dalam (mendarat di permukaan piringan hitam) lalu bergetar halus (*bass jiggle*) mengikuti spektrum suara musik.
 - **Kontrol Musik**: Tombol Previous, Play/Pause, Next berukuran besar dengan bayangan solid tebal (`box-shadow: 4px 4px 0px #1a1a1a`).
 - **Offline Source Folder**: Sekali klik tombol "Pilih Folder Sumber", aplikasi memindai seluruh file audio (`.mp3`, `.wav`, `.m4a`) dalam folder lokal laptop dan memasukkannya ke playlist internal.
-- **YouTube Downloader**: Kotak input URL YouTube yang terintegrasi. File hasil unduhan (.mp3) otomatis tersimpan langsung ke Folder Sumber lokal agar langsung terbaca oleh pemutar musik aplikasi.
+- **YouTube Downloader**: Kotak input URL YouTube yang terintegrasi. Untuk menghindari ketergantungan wajib pada instalasi biner `ffmpeg` di komputer pengguna, biner `yt-dlp` dikonfigurasi untuk mengunduh audio format asli terbaik (seperti `.m4a` atau `.webm`) yang didukung langsung oleh Web Audio API di frontend.
+
 
 ---
 
@@ -107,13 +108,22 @@ stateDiagram-v2
     PausedState --> RunningState : Klik Resume
     
     RunningState --> CompletedState : Waktu Pomodoro Habis (00:00)
-    CompletedState: Alarm piksel berbunyi
+    CompletedState: Alarm piksel berbunyi dengan penyesuaian volume aman
     CompletedState: Musik Fokus fade out
     CompletedState: Musik berganti ke playlist Istirahat
     CompletedState: Muncul Pop-up Konfirmasi manis untuk menyelesaikan tugas
     
     CompletedState --> SetupTask : Klik "Selesai" (Tugas pindah ke Selesai)
     CompletedState --> SetupTask : Klik "Lanjutkan Kerja" (Tugas tetap di Sedang)
+
+### Aturan State Tambahan & Audio Edge Cases
+1. **Lagu Habis Sebelum Pomodoro Selesai**:
+   - *Kondisi*: Durasi lagu aktif selesai diputar sebelum waktu kerja Pomodoro habis.
+   - *Respons*: Modul `audio.js` otomatis memutar lagu berikutnya dalam antrean Playlist Fokus.
+   - *Kontrol*: Mode putar acak (Shuffle) dan ulangi (Repeat) dikendalikan secara independen melalui Web Audio API.
+2. **Penyelarasan Volume Alarm (Mencegah Efek Kejut)**:
+   - *Aturan*: Volume suara alarm piksel penanda sesi selesai **wajib disesuaikan secara proporsional (+20%)** dari tingkat volume slider musik aktif saat itu (dibatasi maksimal 100%). Hal ini dilakukan melalui kontrol gain node Web Audio API untuk menghindari lonjakan suara tiba-tiba yang dapat mengganggu fokus atau mengejutkan pengguna.
+
 ```
 
 ---
@@ -131,7 +141,9 @@ stateDiagram-v2
 ### Backend (Tauri & Rust Core)
 Backend Tauri dibuat seminimal mungkin, hanya menangani fungsi yang tidak bisa dilakukan di browser:
 1. **File System Scan**: Memindai folder musik lokal pilihan pengguna.
-2. **Sidecar Downloader**: Menjalankan biner **`yt-dlp`** bawaan (sidecar) untuk mengunduh audio YouTube dan mengonversinya menjadi `.mp3` ke dalam folder musik pengguna.
+2. **Sidecar Downloader**: Menjalankan biner **`yt-dlp`** bawaan (sidecar) untuk mengunduh audio YouTube.
+   - *Catatan Kaki Arsitektur (Optimasi Biner)*: Agar aplikasi berjalan secara mandiri (*zero-dependency*), Tauri mengonfigurasi `yt-dlp` untuk mengunduh audio dalam format `.m4a` atau `.webm` (audio-only) tanpa memerlukan transcode `ffmpeg` ke `.mp3`. Format-format ini secara native didukung penuh oleh browser engine di bawah Tauri Webview dan Web Audio API, sehingga ukuran kemasan aplikasi tetap minimalis (~15MB dibanding ~80MB jika menyertakan biner static `ffmpeg` sebagai sidecar kedua).
+
 
 ---
 
