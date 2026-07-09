@@ -67,18 +67,18 @@ export class KanbanBoard {
         </form>
 
         <!-- Papan Kanban 3 Kolom -->
-        <div class="kanban-board-wrapper" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; flex-grow: 1;">
+        <div class="kanban-board-wrapper" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; flex-grow: 1; height: 0;">
           
           <!-- Column 1: Belum Dikerjakan -->
-          <div class="kanban-column" data-status="belum" style="border: 2px solid #1a1a1a; padding: 6px; display: flex; flex-direction: column; min-height: 250px; background: #fff;">
+          <div class="kanban-column" data-status="belum" style="border: 2px solid #1a1a1a; padding: 6px; display: flex; flex-direction: column; height: 100%; min-height: 0; background: #fff; box-sizing: border-box;">
             <div class="kanban-header" style="background:#1a1a1a; color:#fff; text-align:center; font-size:10px; padding:4px 2px; margin-bottom:8px; font-weight:bold; font-family:'Share Tech Mono', monospace;">[ BELUM ]</div>
-            <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1;"></div>
+            <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1; overflow-y: auto; height: 0; padding-right: 2px;"></div>
           </div>
 
           <!-- Column 2: Sedang Dikerjakan -->
-          <div class="kanban-column" data-status="sedang" style="border: 2px solid var(--accent-primary); padding: 6px; display: flex; flex-direction: column; min-height: 250px; background: #fff;">
+          <div class="kanban-column" data-status="sedang" style="border: 2px solid var(--accent-primary); padding: 6px; display: flex; flex-direction: column; height: 100%; min-height: 0; background: #fff; box-sizing: border-box;">
             <div class="kanban-header" style="background:var(--accent-primary); color:#1a1a1a; text-align:center; font-size:10px; padding:4px 2px; margin-bottom:8px; font-weight:bold; font-family:'Share Tech Mono', monospace;">[ SEDANG ]</div>
-            <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1;"></div>
+            <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1; overflow-y: auto; height: 0; padding-right: 2px;"></div>
             
             <!-- Animasi Karakter Piksel -->
             <div class="pixel-anim-container">
@@ -109,9 +109,9 @@ export class KanbanBoard {
           </div>
 
           <!-- Column 3: Selesai -->
-          <div class="kanban-column" data-status="selesai" style="border: 2px solid #1a1a1a; padding: 6px; display: flex; flex-direction: column; min-height: 250px; background: #fff;">
+          <div class="kanban-column" data-status="selesai" style="border: 2px solid #1a1a1a; padding: 6px; display: flex; flex-direction: column; height: 100%; min-height: 0; background: #fff; box-sizing: border-box;">
             <div class="kanban-header" style="background:#1a1a1a; color:#fff; text-align:center; font-size:10px; padding:4px 2px; margin-bottom:8px; font-weight:bold; font-family:'Share Tech Mono', monospace;">[ SELESAI ]</div>
-            <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1;"></div>
+            <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1; overflow-y: auto; height: 0; padding-right: 2px;"></div>
           </div>
 
         </div>
