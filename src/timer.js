@@ -21,17 +21,13 @@ export class PomodoroTimer {
 
     // Subscribe to kanban changes to update task list
     this.eb.subscribe('kanban-changed', (tasks) => {
-      const wasRunning = this.timerId !== null;
-      const hadActiveTask = this.hasActiveTask();
-      
       this.tasks = tasks;
       
-      const hasActiveNow = this.hasActiveTask();
-      
-      // If timer is running, not on break, and the active task was removed
-      if (wasRunning && !this.isBreak && hadActiveTask && !hasActiveNow) {
+      const wasRunning = this.timerId !== null;
+      // If timer is running, not on break, and there are no active tasks in progress
+      if (wasRunning && !this.isBreak && !this.hasActiveTask()) {
         this.pause();
-        alert("⚠️ SYSTEM HALT: Tugas aktif dipindahkan atau dihapus. Timer otomatis dihentikan!");
+        alert("⚠️ SYSTEM HALT: Tidak ada tugas aktif di kolom 'SEDANG'. Timer otomatis dihentikan!");
       }
     });
 
