@@ -285,7 +285,7 @@ export class MusicPlayer {
     this.playlist.forEach((track, index) => {
       const item = document.createElement('div');
       item.className = 'playlist-item';
-      item.style = 'font-size: 11px; padding: 4px; border-bottom: 1px dotted #ccc; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
+      item.style = 'font-size: 11px; padding: 6px 4px; border-bottom: 1px dotted #ccc; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; height: auto; line-height: 1.2; box-sizing: border-box;';
       item.innerText = `${index + 1}. ${track.name}`;
       
       item.addEventListener('click', () => {
