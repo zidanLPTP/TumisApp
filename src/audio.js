@@ -219,8 +219,25 @@ export class MusicPlayer {
       return;
     }
     
-    dlStatusEl.innerText = "Mengunduh audio dari YouTube...";
+    let progress = 0;
     dlStatusEl.style.color = "var(--accent-secondary)";
+    
+    const updateProgressText = (p) => {
+      const bars = Math.floor(p / 10);
+      const dots = 10 - bars;
+      const barStr = "█".repeat(bars) + "░".repeat(dots);
+      dlStatusEl.innerText = `DOWNLOADING: [${barStr}] ${p}%`;
+    };
+    
+    updateProgressText(0);
+    
+    const progressInterval = setInterval(() => {
+      if (progress < 90) {
+        progress += Math.floor(Math.random() * 8) + 2; // Increment by 2-9%
+        if (progress > 90) progress = 90;
+        updateProgressText(progress);
+      }
+    }, 350);
     
     try {
       if (window.__TAURI__) {
@@ -228,14 +245,26 @@ export class MusicPlayer {
           url: url,
           outputDir: this.musicFolder
         });
-        dlStatusEl.innerText = "Selesai! Memperbarui playlist...";
-        dlStatusEl.style.color = "var(--color-active)";
-        urlInput.value = '';
-        this.scanFolder();
+        
+        clearInterval(progressInterval);
+        updateProgressText(100);
+        
+        setTimeout(() => {
+          dlStatusEl.innerText = "Selesai! Memperbarui playlist...";
+          dlStatusEl.style.color = "var(--color-active)";
+          urlInput.value = '';
+          this.scanFolder();
+        }, 600);
       } else {
-        dlStatusEl.innerText = "Mmock download sukses.";
+        clearInterval(progressInterval);
+        updateProgressText(100);
+        setTimeout(() => {
+          dlStatusEl.innerText = "Mock download sukses.";
+          dlStatusEl.style.color = "var(--color-active)";
+        }, 500);
       }
     } catch (e) {
+      clearInterval(progressInterval);
       console.error(e);
       dlStatusEl.innerText = `Gagal: ${e}`;
       dlStatusEl.style.color = "red";
