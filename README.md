@@ -17,6 +17,18 @@
 
 ---
 
+## 📥 Unduh & Pasang (Download)
+
+Anda dapat langsung mengunduh berkas instalasi resmi **TUMIS** untuk Windows (64-bit) melalui tombol di bawah ini:
+
+<p align="center">
+  <a href="https://github.com/zidanLPTP/TumisApp/raw/master/release/Tumis_Setup_x64.msi">
+    <img src="https://img.shields.io/badge/Download_Installer-Windows_x64-ffbc00?style=for-the-badge&logo=windows&logoColor=black&labelColor=white" alt="Unduh Tumis Setup MSI" height="40"/>
+  </a>
+</p>
+
+---
+
 ## 🍲 Tentang Proyek
 
 **TUMIS** adalah aplikasi desktop produktivitas terintegrasi yang menggabungkan manajemen tugas (**Tugas**), pengatur waktu fokus (**Waktu**), dan pemutar audio (**Musik**) dalam satu antarmuka tunggal. 
