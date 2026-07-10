@@ -28,14 +28,20 @@ fn scan_music_folder(folder_path: String) -> Result<Vec<String>, String> {
 }
 
 #[tauri::command]
-fn download_youtube_audio(url: String, output_dir: String) -> Result<String, String> {
+fn download_youtube_audio(app: tauri::AppHandle, url: String, output_dir: String) -> Result<String, String> {
+    use tauri::Manager;
     let path = Path::new(&output_dir);
     if !path.exists() {
         return Err("Folder output tidak ditemukan".to_string());
     }
 
+    // Resolve the path to our bundled yt-dlp.exe
+    let yt_dlp_path = app.path()
+        .resolve("yt-dlp.exe", tauri::path::BaseDirectory::Resource)
+        .map_err(|e| format!("Gagal memetakan jalur resource: {}", e))?;
+
     // Download the best audio format that is natively playable (usually .m4a or .webm)
-    let output = Command::new("yt-dlp")
+    let output = Command::new(yt_dlp_path)
         .args(&[
             "-f", "ba[ext=m4a]/ba",
             "-o", &format!("{}/%(title)s.%(ext)s", output_dir),
@@ -55,7 +61,7 @@ fn download_youtube_audio(url: String, output_dir: String) -> Result<String, Str
             }
         }
         Err(e) => Err(format!(
-            "Gagal menjalankan yt-dlp: {}. Pastikan yt-dlp.exe terinstal dan ada di PATH sistem Anda.",
+            "Gagal menjalankan biner yt-dlp bawaan: {}. Pastikan sistem operasi Anda mengizinkan pengeksekusian biner lokal.",
             e
         ))
     }

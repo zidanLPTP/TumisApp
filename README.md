@@ -60,7 +60,11 @@ Proyek ini merupakan bagian dari karya kreatif **Bumbu Studio**, yang dirancang 
 Pastikan komputer Anda memiliki perangkat lunak berikut:
 1.  **Node.js** (v18 ke atas) & **npm**
 2.  **Rust Compiler** & **Cargo** (untuk membangun backend Tauri)
-3.  **yt-dlp** (opsional, pastikan terinstal di PATH sistem jika ingin menggunakan fitur YouTube Downloader)
+3.  **Deno JS Runtime** (wajib terpasang di sistem PATH jika ingin menggunakan fitur YouTube Downloader untuk memecahkan sandi YouTube terbaru: `winget install --id=DenoLand.Deno`)
+
+> [!NOTE]
+> Biner pengunduh **`yt-dlp.exe`** terbaru sudah dipaketkan secara internal di dalam aplikasi sebagai *Tauri Resource Bundle*. Anda tidak perlu lagi mengunduh atau menginstal `yt-dlp` terpisah di komputer Anda!
+
 
 ### Langkah-Langkah Menjalankan
 1.  **Klon Repositori**:
