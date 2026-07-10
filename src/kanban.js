@@ -177,27 +177,32 @@ export class KanbanBoard {
         // Left click only, ignore if clicking delete button
         if (e.button !== 0 || e.target.closest('.delete-task-btn')) return;
         
-        e.preventDefault(); // Prevent default text selection dragging
+        e.stopPropagation(); // Block bubbling to bezel to prevent window drag conflicts!
+        e.preventDefault();  // Prevent default text selection dragging
         
         const taskId = card.dataset.id;
         const rect = card.getBoundingClientRect();
+        
+        const screen = document.querySelector('.crt-screen');
+        const screenRect = screen.getBoundingClientRect();
+        
         const offsetX = e.clientX - rect.left;
         const offsetY = e.clientY - rect.top;
         
-        // Create a beautiful floating clone of the card
+        // Create a beautiful floating clone of the card inside the screen context
         const clone = card.cloneNode(true);
-        clone.style.position = 'fixed';
+        clone.style.position = 'absolute';
         clone.style.width = rect.width + 'px';
         clone.style.height = rect.height + 'px';
-        clone.style.left = rect.left + 'px';
-        clone.style.top = rect.top + 'px';
+        clone.style.left = (rect.left - screenRect.left) + 'px';
+        clone.style.top = (rect.top - screenRect.top) + 'px';
         clone.style.opacity = '0.85';
         clone.style.zIndex = '9999';
         clone.style.pointerEvents = 'none'; // Element under point detection bypass
         clone.style.transform = 'rotate(2deg)';
         clone.style.boxShadow = '5px 5px 10px rgba(0,0,0,0.35)';
         clone.style.cursor = 'move';
-        document.body.appendChild(clone);
+        screen.appendChild(clone);
         
         // Hide the original card
         card.style.visibility = 'hidden';
@@ -207,8 +212,8 @@ export class KanbanBoard {
         let currentHoveredBarrier = null;
 
         const onMouseMove = (moveEvent) => {
-          clone.style.left = (moveEvent.clientX - offsetX) + 'px';
-          clone.style.top = (moveEvent.clientY - offsetY) + 'px';
+          clone.style.left = (moveEvent.clientX - screenRect.left - offsetX) + 'px';
+          clone.style.top = (moveEvent.clientY - screenRect.top - offsetY) + 'px';
           
           // Detect element currently under mouse pointer
           const elementUnder = document.elementFromPoint(moveEvent.clientX, moveEvent.clientY);
@@ -249,8 +254,8 @@ export class KanbanBoard {
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('mouseup', onMouseUp);
           
-          if (document.body.contains(clone)) {
-            document.body.removeChild(clone);
+          if (screen.contains(clone)) {
+            screen.removeChild(clone);
           }
           card.style.visibility = 'visible';
           window.isDraggingTask = false;
