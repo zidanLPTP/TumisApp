@@ -131,7 +131,16 @@ export class KanbanBoard {
         card.className = 'task-item';
         card.draggable = true;
         card.dataset.id = task.id;
-        card.style = 'background:#fff; border: 2px solid #1a1a1a; padding: 6px; font-size: 11px; cursor: move; box-shadow: 2px 2px 0px #1a1a1a; display: flex; justify-content: space-between; align-items: center;';
+        
+        let cardStyle = 'padding: 6px; font-size: 11px; cursor: move; display: flex; justify-content: space-between; align-items: center; ';
+        if (task.status === 'sedang') {
+          cardStyle += 'background: #fffbef; border: 2px solid var(--accent-primary); box-shadow: 2px 2px 0px var(--accent-primary);';
+        } else if (task.status === 'selesai') {
+          cardStyle += 'background: #f4fff4; border: 2px solid var(--color-active); box-shadow: 2px 2px 0px var(--color-active);';
+        } else {
+          cardStyle += 'background: #ffffff; border: 2px solid #1a1a1a; box-shadow: 2px 2px 0px #1a1a1a;';
+        }
+        card.style = cardStyle;
         
         card.innerHTML = `
           <span class="task-title" style="word-break: break-all;">${task.title}</span>
@@ -167,9 +176,13 @@ export class KanbanBoard {
       card.addEventListener('dragstart', (e) => {
         card.style.opacity = '0.5';
         e.dataTransfer.setData('text/plain', card.dataset.id);
+        window.isDraggingTask = true;
       });
       card.addEventListener('dragend', () => {
         card.style.opacity = '1';
+        window.isDraggingTask = false;
+        // Clean up any residual barrier classes
+        document.querySelectorAll('.drag-barrier').forEach(el => el.classList.remove('drag-barrier'));
       });
     });
 

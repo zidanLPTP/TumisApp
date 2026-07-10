@@ -6,12 +6,12 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <div class="pc-bezel" data-tauri-drag-region style="cursor: move;">
-    <div class="crt-screen dithered-bg" data-tauri-drag-region>
+  <div class="pc-bezel" style="cursor: move;">
+    <div class="crt-screen dithered-bg">
       
       <!-- Header Aplikasi -->
-      <div class="panel-header" data-tauri-drag-region style="border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 15px; cursor: move;">
-        <div data-tauri-drag-region style="display: flex; align-items: center; gap: 8px;">
+      <div class="panel-header" style="border-bottom: 4px solid #1a1a1a; padding-bottom: 8px; margin-bottom: 15px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 20px;">💾</span>
           <span style="font-size: 20px; font-weight: bold; letter-spacing: 2px;">T U M I S</span>
         </div>
@@ -159,6 +159,35 @@
     } catch (e) {
       console.warn("Failed to load click sfx: ", e);
     }
+
+    // Drag and drop barriers for Timer and Music panels
+    const timerPanel = document.getElementById('timer-panel');
+    const musicPanel = document.getElementById('music-panel');
+
+    [timerPanel, musicPanel].forEach(panel => {
+      panel.addEventListener('dragenter', (e) => {
+        if (window.isDraggingTask) {
+          e.preventDefault();
+          panel.classList.add('drag-barrier');
+        }
+      });
+
+      panel.addEventListener('dragover', (e) => {
+        if (window.isDraggingTask) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'none';
+        }
+      });
+
+      panel.addEventListener('dragleave', () => {
+        panel.classList.remove('drag-barrier');
+      });
+
+      panel.addEventListener('drop', (e) => {
+        e.preventDefault();
+        panel.classList.remove('drag-barrier');
+      });
+    });
   </script>
 </body>
 </html>
