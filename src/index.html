@@ -160,6 +160,69 @@
       console.warn("Failed to load click sfx: ", e);
     }
 
+    // Windows 95/98 Custom Alert Dialog Override
+    window.alert = function(message) {
+      let icon = "ℹ️";
+      let title = "TUMIS.EXE";
+      if (message.includes("⚠️") || message.includes("SYSTEM HALT") || message.includes("gagal") || message.includes("tentukan") || message.includes("valid")) {
+        icon = "⚠️";
+        title = "SYSTEM WARNING";
+      } else if (message.includes("🎉") || message.includes("⏱️") || message.includes("SELESAI")) {
+        icon = "ℹ️";
+        title = "SYSTEM MESSAGE";
+      }
+
+      // Extract emojis for clean retro text
+      const cleanMessage = message.replace(/⚠️|🎉|⏱️|ℹ️/g, "").trim();
+
+      const overlay = document.createElement('div');
+      overlay.className = 'retro-modal-overlay';
+      overlay.innerHTML = `
+        <div class="win95-dialog">
+          <div class="win95-titlebar">
+            <span>${title}</span>
+            <button class="win95-titlebar-btn" id="win95-alert-close">X</button>
+          </div>
+          <div class="win95-body">
+            <span class="win95-icon">${icon}</span>
+            <span style="flex-grow: 1; white-space: pre-line;">${cleanMessage}</span>
+          </div>
+          <div class="win95-btn-container">
+            <button class="win95-btn" id="win95-alert-ok">OK</button>
+          </div>
+        </div>
+      `;
+
+      const screen = document.querySelector('.crt-screen');
+      screen.appendChild(overlay);
+
+      // Play synthesized classic retro warn beep
+      if (window.player && window.player.ctx) {
+        try {
+          const osc = window.player.ctx.createOscillator();
+          const gain = window.player.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(window.player.ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, window.player.ctx.currentTime); // 880Hz beep
+          gain.gain.setValueAtTime(0.04, window.player.ctx.currentTime);
+          osc.start();
+          osc.stop(window.player.ctx.currentTime + 0.12);
+        } catch (err) {
+          console.warn("Synthesizer beep failed: ", err);
+        }
+      }
+
+      const closeAlert = () => {
+        if (screen.contains(overlay)) screen.removeChild(overlay);
+      };
+
+      overlay.querySelector('#win95-alert-close').addEventListener('click', closeAlert);
+      const okBtn = overlay.querySelector('#win95-alert-ok');
+      okBtn.addEventListener('click', closeAlert);
+      okBtn.focus();
+    };
+
     // Drag and drop barriers for Timer and Music panels
     const timerPanel = document.getElementById('timer-panel');
     const musicPanel = document.getElementById('music-panel');
