@@ -173,40 +173,106 @@ export class KanbanBoard {
     const cols = this.container.querySelectorAll('.kanban-column');
 
     cards.forEach(card => {
-      card.addEventListener('dragstart', (e) => {
-        card.style.opacity = '0.5';
-        e.dataTransfer.setData('text/plain', card.dataset.id);
+      card.addEventListener('mousedown', (e) => {
+        // Left click only, ignore if clicking delete button
+        if (e.button !== 0 || e.target.closest('.delete-task-btn')) return;
+        
+        e.preventDefault(); // Prevent default text selection dragging
+        
+        const taskId = card.dataset.id;
+        const rect = card.getBoundingClientRect();
+        const offsetX = e.clientX - rect.left;
+        const offsetY = e.clientY - rect.top;
+        
+        // Create a beautiful floating clone of the card
+        const clone = card.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.width = rect.width + 'px';
+        clone.style.height = rect.height + 'px';
+        clone.style.left = rect.left + 'px';
+        clone.style.top = rect.top + 'px';
+        clone.style.opacity = '0.85';
+        clone.style.zIndex = '9999';
+        clone.style.pointerEvents = 'none'; // Element under point detection bypass
+        clone.style.transform = 'rotate(2deg)';
+        clone.style.boxShadow = '5px 5px 10px rgba(0,0,0,0.35)';
+        clone.style.cursor = 'move';
+        document.body.appendChild(clone);
+        
+        // Hide the original card
+        card.style.visibility = 'hidden';
         window.isDraggingTask = true;
-      });
-      card.addEventListener('dragend', () => {
-        card.style.opacity = '1';
-        window.isDraggingTask = false;
-        // Clean up any residual barrier classes
-        document.querySelectorAll('.drag-barrier').forEach(el => el.classList.remove('drag-barrier'));
-      });
-    });
+        
+        let currentHoveredCol = null;
+        let currentHoveredBarrier = null;
 
-    cols.forEach(col => {
-      col.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        col.style.background = '#f9f7f0';
-      });
-
-      col.addEventListener('dragleave', () => {
-        col.style.background = '#fff';
-      });
-
-      col.addEventListener('drop', (e) => {
-        e.preventDefault();
-        col.style.background = '#fff';
-        const id = e.dataTransfer.getData('text/plain');
-        const status = col.dataset.status;
-        const task = this.tasks.find(t => t.id === id);
-        if (task && task.status !== status) {
-          task.status = status;
-          this.saveTasks();
-          this.render();
-        }
+        const onMouseMove = (moveEvent) => {
+          clone.style.left = (moveEvent.clientX - offsetX) + 'px';
+          clone.style.top = (moveEvent.clientY - offsetY) + 'px';
+          
+          // Detect element currently under mouse pointer
+          const elementUnder = document.elementFromPoint(moveEvent.clientX, moveEvent.clientY);
+          if (!elementUnder) return;
+          
+          // Check columns
+          const col = elementUnder.closest('.kanban-column');
+          if (col) {
+            if (currentHoveredCol !== col) {
+              if (currentHoveredCol) currentHoveredCol.classList.remove('drag-over');
+              currentHoveredCol = col;
+              currentHoveredCol.classList.add('drag-over');
+            }
+          } else {
+            if (currentHoveredCol) {
+              currentHoveredCol.classList.remove('drag-over');
+              currentHoveredCol = null;
+            }
+          }
+          
+          // Check barriers (Timer or Music panels)
+          const barrierPanel = elementUnder.closest('#timer-panel, #music-panel');
+          if (barrierPanel) {
+            if (currentHoveredBarrier !== barrierPanel) {
+              if (currentHoveredBarrier) currentHoveredBarrier.classList.remove('drag-barrier');
+              currentHoveredBarrier = barrierPanel;
+              currentHoveredBarrier.classList.add('drag-barrier');
+            }
+          } else {
+            if (currentHoveredBarrier) {
+              currentHoveredBarrier.classList.remove('drag-barrier');
+              currentHoveredBarrier = null;
+            }
+          }
+        };
+        
+        const onMouseUp = () => {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+          
+          if (document.body.contains(clone)) {
+            document.body.removeChild(clone);
+          }
+          card.style.visibility = 'visible';
+          window.isDraggingTask = false;
+          
+          if (currentHoveredCol) {
+            currentHoveredCol.classList.remove('drag-over');
+            const status = currentHoveredCol.dataset.status;
+            const task = this.tasks.find(t => t.id === taskId);
+            if (task && task.status !== status) {
+              task.status = status;
+              this.saveTasks();
+              this.render();
+            }
+          }
+          
+          if (currentHoveredBarrier) {
+            currentHoveredBarrier.classList.remove('drag-barrier');
+          }
+        };
+        
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
       });
     });
   }

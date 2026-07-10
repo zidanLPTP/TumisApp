@@ -178,17 +178,17 @@
       const overlay = document.createElement('div');
       overlay.className = 'retro-modal-overlay';
       overlay.innerHTML = `
-        <div class="win95-dialog">
-          <div class="win95-titlebar">
+        <div class="retro-bento-dialog">
+          <div class="retro-bento-titlebar">
             <span>${title}</span>
-            <button class="win95-titlebar-btn" id="win95-alert-close">X</button>
+            <button class="retro-bento-titlebar-btn" id="win95-alert-close">X</button>
           </div>
-          <div class="win95-body">
-            <span class="win95-icon">${icon}</span>
-            <span style="flex-grow: 1; white-space: pre-line;">${cleanMessage}</span>
+          <div class="retro-bento-body">
+            <span class="retro-bento-icon">${icon}</span>
+            <span style="flex-grow: 1; white-space: pre-line; letter-spacing: 0.5px;">${cleanMessage}</span>
           </div>
-          <div class="win95-btn-container">
-            <button class="win95-btn" id="win95-alert-ok">OK</button>
+          <div class="retro-bento-btn-container">
+            <button class="retro-bento-btn" id="win95-alert-ok">OK</button>
           </div>
         </div>
       `;

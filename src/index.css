@@ -348,106 +348,94 @@ body {
   background: #f9f7f0 !important;
 }
 
-/* Win95/98 Retro Modal Alert */
+/* Bento Box Retro Modal Alert */
 .retro-modal-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.win95-dialog {
-  background: #c0c0c0;
-  border-top: 2px solid #fff;
-  border-left: 2px solid #fff;
-  border-right: 2px solid #808080;
-  border-bottom: 2px solid #808080;
-  box-shadow: 1px 1px 0px #000;
-  width: 320px;
-  padding: 2px;
+.retro-bento-dialog {
+  background: var(--bg-panel);
+  border: 3px solid var(--color-text);
+  box-shadow: 5px 5px 0px var(--color-text);
+  width: 330px;
   box-sizing: border-box;
-  font-family: monospace;
+  font-family: 'Share Tech Mono', monospace;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.win95-titlebar {
-  background: #000080;
+.retro-bento-titlebar {
+  background: var(--color-text);
   color: #fff;
-  padding: 4px 6px;
+  padding: 6px 10px;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  letter-spacing: 1px;
 }
 
-.win95-titlebar-btn {
-  background: #c0c0c0;
-  border-top: 1px solid #fff;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #808080;
-  border-bottom: 1px solid #808080;
+.retro-bento-titlebar-btn {
+  background: var(--accent-secondary);
+  border: 2px solid #fff;
   width: 16px;
-  height: 14px;
+  height: 16px;
   font-size: 9px;
   font-weight: bold;
-  color: #000;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding: 0;
-  box-shadow: none;
 }
 
-.win95-titlebar-btn:active {
-  border-top: 1px solid #808080;
-  border-left: 1px solid #808080;
-  border-right: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+.retro-bento-titlebar-btn:active {
+  transform: translate(1px, 1px);
 }
 
-.win95-body {
-  padding: 15px 12px;
+.retro-bento-body {
+  padding: 18px 15px;
   display: flex;
   gap: 12px;
   align-items: center;
-  font-size: 11px;
-  color: #000;
+  font-size: 12px;
+  color: var(--color-text);
 }
 
-.win95-icon {
-  font-size: 24px;
+.retro-bento-icon {
+  font-size: 26px;
 }
 
-.win95-btn-container {
+.retro-bento-btn-container {
   display: flex;
   justify-content: center;
-  padding-bottom: 12px;
+  padding-bottom: 15px;
 }
 
-.win95-btn {
-  background: #c0c0c0;
-  border-top: 1px solid #fff;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #808080;
-  border-bottom: 1px solid #808080;
-  box-shadow: 1px 1px 0px #000;
-  padding: 4px 20px;
+.retro-bento-btn {
+  background: var(--accent-primary);
+  border: 2px solid var(--color-text);
+  box-shadow: 2px 2px 0px var(--color-text);
+  padding: 5px 24px;
   font-size: 11px;
-  font-family: monospace;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  color: var(--color-text);
   cursor: pointer;
   outline: none;
 }
 
-.win95-btn:active {
-  border-top: 1px solid #808080;
-  border-left: 1px solid #808080;
-  border-right: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  box-shadow: none;
+.retro-bento-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--color-text);
 }
 
 
