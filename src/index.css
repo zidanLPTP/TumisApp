@@ -92,8 +92,8 @@ body {
 .dithered-bg {
   background-color: #ffffff;
   background-image: 
-    radial-gradient(circle, #f3ede2 20%, transparent 20%),
-    radial-gradient(circle, #f3ede2 20%, transparent 20%);
+    radial-gradient(circle, #f7f4eb 20%, transparent 20%),
+    radial-gradient(circle, #f7f4eb 20%, transparent 20%);
   background-size: 4px 4px;
   background-position: 0 0, 2px 2px;
 }
@@ -148,6 +148,7 @@ body {
   width: 100%;
   box-sizing: border-box;
   background: #fff;
+  caret-color: var(--accent-primary);
 }
 
 .retro-input:focus {
@@ -164,6 +165,11 @@ body {
   box-shadow: 2px 2px 0px var(--color-text);
   font-family: inherit;
   font-size: 11px;
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-retro:hover {
+  background: #eae8df;
 }
 
 .btn-retro:active {
@@ -173,6 +179,20 @@ body {
 
 .btn-retro.primary {
   background: var(--accent-primary);
+}
+
+.btn-retro.primary:hover {
+  background: #e5a900;
+}
+
+/* Card delete button styling */
+.task-item .delete-task-btn {
+  opacity: 0.3;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.task-item:hover .delete-task-btn {
+  opacity: 1;
 }
 
 /* Pixel scene animations */

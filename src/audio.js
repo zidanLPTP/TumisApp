@@ -282,7 +282,7 @@ export class MusicPlayer {
           </div>
 
           <!-- Turntable Arm -->
-          <div class="turntable-arm-floating" style="position:absolute; top:12px; right:45px; width:24px; height:45px; background:none; border-right:4px solid #fff; border-top:4px solid #fff; border-radius:0 12px 0 0; transform-origin:top right; transform:rotate(0deg); transition: transform 0.5s; z-index:2; pointer-events:none;">
+          <div class="turntable-arm-floating" style="position:absolute; top:12px; right:45px; width:24px; height:45px; background:none; border-right:4px solid #fff; border-top:4px solid #fff; border-radius:0 12px 0 0; transform-origin:top right; transform:rotate(0deg); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); z-index:2; pointer-events:none;">
             <!-- Cartridge/Needle block -->
             <div style="position:absolute; bottom:0; left:-4px; width:8px; height:12px; background:var(--accent-secondary); border:1px solid #1a1a1a;"></div>
           </div>
@@ -306,7 +306,7 @@ export class MusicPlayer {
           <!-- Volume and Shuffle/Repeat -->
           <div style="display:flex; align-items:center; justify-content:space-between; font-size:11px; padding:0 4px;">
             <div style="display:flex; align-items:center; gap:4px;">
-              <span>🔊</span>
+              <img src="assets/VOLUME.svg" style="height: 12px; width: auto;" alt="Volume Icon"/>
               <input type="range" id="volume-slider" min="0" max="100" value="50" style="width:70px; accent-color:#1a1a1a;">
             </div>
             <div style="display:flex; gap:6px;">
