@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges">
+  <!-- Batang Atas Horizontal Tebal (Thick Flat Top Bar) -->
+  <rect x="2" y="2" width="11" height="3" fill="#4a354f" />
+
+  <!-- Tiang Vertikal Kiri (Left Straight Stem) -->
+  <rect x="2" y="5" width="2" height="6" fill="#4a354f" />
+
+  <!-- Tiang Vertikal Kanan (Right Straight Stem) -->
+  <rect x="11" y="5" width="2" height="6" fill="#4a354f" />
+
+  <!-- Kepala Not Kiri - Kotak Padat (Left Solid Square Note Head) -->
+  <rect x="0" y="9" width="4" height="4" fill="#4a354f" />
+
+  <!-- Kepala Not Kanan - Kotak Padat (Right Solid Square Note Head) -->
+  <rect x="9" y="9" width="4" height="4" fill="#4a354f" />
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges">
+  <!-- Bodi Utama Disket (Dark Purple) -->
+  <path d="M1,1 h13 v1 h1 v13 h-14 z" fill="#4a354f" />
+  
+  <!-- Sudut Potong Kanan Atas Khas Disket (Warna Gelap Penyeimbang) -->
+  <rect x="13" y="1" width="1" height="1" fill="#322236" />
+  
+  <!-- Shutter Logam Atas (Silver/Grey) -->
+  <rect x="4" y="1" width="4" height="4" fill="#a0a0a0" />
+  <rect x="5" y="2" width="1" height="2" fill="#787878" />
+
+  <!-- Stiker Label Tengah (Crisp White) -->
+  <rect x="3" y="7" width="10" height="8" fill="#ffffff" />
+  
+  <!-- Garis Tulis pada Stiker (Detail Y2K Retro) -->
+  <rect x="4" y="9" width="8" height="1" fill="#e0e0e0" />
+  <rect x="4" y="11" width="8" height="1" fill="#e0e0e0" />
+  <rect x="4" y="13" width="8" height="1" fill="#e0e0e0" />
+  
+  <!-- Takik Proteksi Tulis Kanan Bawah (Write-Protect Notch) -->
+  <rect x="13" y="14" width="1" height="1" fill="#1a1a1a" opacity="0.3" />
+</svg>

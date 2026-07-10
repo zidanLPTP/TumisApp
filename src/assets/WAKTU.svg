@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges">
+  <!-- Tombol Mekanis Atas (Mechanical Clicker Button) -->
+  <rect x="7" y="0" width="2" height="2" fill="#4a354f" />
+  
+  <!-- Penyangga Tombol / Winding Stem -->
+  <rect x="7" y="2" width="2" height="1" fill="#8a758f" />
+
+  <!-- Bodi Utama Jam - Lingkaran Piksel Kasar (Dark Purple Frame) -->
+  <!-- Baris 1 (Top Frame) -->
+  <rect x="5" y="3" width="6" height="1" fill="#4a354f" />
+  <!-- Baris 2 & 3 (Upper Corners) -->
+  <rect x="3" y="4" width="2" height="1" fill="#4a354f" />
+  <rect x="11" y="4" width="2" height="1" fill="#4a354f" />
+  <rect x="2" y="5" width="1" height="2" fill="#4a354f" />
+  <rect x="13" y="5" width="1" height="2" fill="#4a354f" />
+  
+  <!-- Baris Bodi Tengah / Lebar Maksimal -->
+  <rect x="1" y="7" width="1" height="3" fill="#4a354f" />
+  <rect x="14" y="7" width="1" height="3" fill="#4a354f" />
+  
+  <!-- Baris 4 & 5 (Lower Corners) -->
+  <rect x="2" y="10" width="1" height="2" fill="#4a354f" />
+  <rect x="13" y="10" width="1" height="2" fill="#4a354f" />
+  <rect x="3" y="12" width="2" height="1" fill="#4a354f" />
+  <rect x="11" y="12" width="2" height="1" fill="#4a354f" />
+  <!-- Baris 6 (Bottom Frame) -->
+  <rect x="5" y="13" width="6" height="1" fill="#4a354f" />
+
+  <!-- Bagian Dalam Layar Jam (Latar Belakang Putih/Terang) -->
+  <rect x="5" y="4" width="6" height="1" fill="#ffffff" />
+  <rect x="3" y="5" width="10" height="2" fill="#ffffff" />
+  <rect x="2" y="7" width="12" height="3" fill="#ffffff" />
+  <rect x="3" y="10" width="10" height="2" fill="#ffffff" />
+  <rect x="5" y="12" width="6" height="1" fill="#ffffff" />
+
+  <!-- Titik Pusat Jam / Center Pin -->
+  <rect x="7" y="8" width="2" height="1" fill="#1a1a1a" />
+
+  <!-- Jarum Penunjuk Kotak Kaku (Boxy Indicator Hand - Menunjuk Jam 2) -->
+  <rect x="9" y="6" width="2" height="1" fill="#ff7a59" />
+  <rect x="8" y="7" width="1" height="1" fill="#ff7a59" />
+</svg>
