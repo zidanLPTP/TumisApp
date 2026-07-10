@@ -239,6 +239,13 @@ export class MusicPlayer {
       console.error(e);
       dlStatusEl.innerText = `Gagal: ${e}`;
       dlStatusEl.style.color = "red";
+      
+      const errText = String(e);
+      if (errText.includes("403") || errText.includes("Forbidden") || errText.includes("signature")) {
+        alert("⚠️ SYSTEM HALT: Biner 'yt-dlp' Anda kedaluwarsa (HTTP 403 Forbidden).\n\nSolusi: Buka PowerShell/Command Prompt Anda, lalu jalankan:\n\nyt-dlp -U\n\nUntuk memperbarui ke versi terbaru.");
+      } else if (errText.includes("JavaScript") || errText.includes("JS runtime") || errText.includes("runtime could be found")) {
+        alert("⚠️ SYSTEM HALT: Runtime JavaScript tidak ditemukan oleh 'yt-dlp'.\n\nSolusi: Buka PowerShell/Command Prompt Anda, lalu jalankan:\n\nwinget install --id=DenoLand.Deno\n\nLalu restart aplikasi ini agar PATH baru terbaca.");
+      }
     }
   }
 
