@@ -138,6 +138,27 @@
       document.getElementById('btn-win-minimize').addEventListener('click', () => console.log("Window Minimize"));
       document.getElementById('btn-win-close').addEventListener('click', () => console.log("Window Close"));
     }
+
+    // Global tactile click sound effect
+    try {
+      const clickSound = new Audio('assets/klik.mp3');
+      clickSound.volume = 0.25;
+      
+      const playClickSFX = () => {
+        const sfx = clickSound.cloneNode(true);
+        sfx.volume = 0.25;
+        sfx.play().catch(err => console.warn("SFX blocked: ", err));
+      };
+
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('.btn-retro, .task-item, .delete-task-btn, .playlist-item, input, button');
+        if (target) {
+          playClickSFX();
+        }
+      });
+    } catch (e) {
+      console.warn("Failed to load click sfx: ", e);
+    }
   </script>
 </body>
 </html>
