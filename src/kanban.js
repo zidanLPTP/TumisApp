@@ -81,29 +81,11 @@ export class KanbanBoard {
             <div class="task-list" style="display:flex; flex-direction:column; gap:8px; flex-grow: 1; overflow-y: auto; height: 0; padding-right: 2px;"></div>
             
             <!-- Animasi Karakter Piksel -->
-            <div class="pixel-anim-container">
+            <div class="pixel-anim-container" style="display: flex; justify-content: center; align-items: center; padding: 2px;">
               ${isAnimActive ? `
-                <!-- Karakter Sedang Mengetik -->
-                <div class="mini-pc"></div>
-                <div class="character-wrapper">
-                  <div class="character-head"></div>
-                  <div class="character-body">
-                    <div class="character-hands"></div>
-                  </div>
-                </div>
-                <div class="mini-cup-wrapper">
-                  <div class="steam"></div>
-                  <div class="mini-cup"></div>
-                </div>
+                <img src="assets/work.gif" style="height: 56px; width: auto; object-fit: contain; image-rendering: pixelated;" alt="Working Animation" />
               ` : `
-                <!-- Karakter Idle berdiri rileks -->
-                <div class="character-wrapper" style="margin-left: auto; margin-right: auto;">
-                  <div class="character-head"></div>
-                  <div class="character-body" style="height: 14px;">
-                    <!-- Hands are resting -->
-                    <div style="position: absolute; bottom: 0; left: 1px; width: 12px; height: 2px; background: #ffdbb5; border-top: 2px solid var(--color-text);"></div>
-                  </div>
-                </div>
+                <img src="assets/santai.gif" style="height: 56px; width: auto; object-fit: contain; image-rendering: pixelated;" alt="Idle Animation" />
               `}
             </div>
           </div>
