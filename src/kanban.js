@@ -2,18 +2,18 @@ export class KanbanBoard {
   constructor(containerEl, eventBroker) {
     this.container = containerEl;
     this.eb = eventBroker;
-    
+
     // Load from local storage or set default tasks
     const saved = localStorage.getItem('tumis_tasks');
     this.tasks = saved ? JSON.parse(saved) : [
-      { id: '1', title: '☕ Seduh Kopi Hitam', status: 'belum' },
-      { id: '2', title: '📝 Integrasi UI/UX Pro Max', status: 'sedang' }
+      { id: '1', title: 'Selamat datang', status: 'belum' },
+      { id: '2', title: 'Coba fitur fiturnya gih..', status: 'sedang' }
     ];
-    
+
     this.isWorking = false;
-    
+
     this.init();
-    
+
     // Subscribe to timer events
     this.eb.subscribe('timer-running', () => this.setWorking(true));
     this.eb.subscribe('timer-paused', () => this.setWorking(false));
@@ -131,7 +131,7 @@ export class KanbanBoard {
         card.className = 'task-item';
         card.draggable = true;
         card.dataset.id = task.id;
-        
+
         let cardStyle = 'padding: 6px; font-size: 11px; cursor: move; display: flex; justify-content: space-between; align-items: center; ';
         if (task.status === 'sedang') {
           cardStyle += 'background: #fffbef; border: 2px solid var(--accent-primary); box-shadow: 2px 2px 0px var(--accent-primary);';
@@ -141,7 +141,7 @@ export class KanbanBoard {
           cardStyle += 'background: #ffffff; border: 2px solid #1a1a1a; box-shadow: 2px 2px 0px #1a1a1a;';
         }
         card.style = cardStyle;
-        
+
         card.innerHTML = `
           <span class="task-title" style="word-break: break-all;">${task.title}</span>
           <button class="delete-task-btn" style="background:none; border:none; color:var(--accent-secondary); cursor:pointer; font-weight:bold; font-size:11px; padding:0 2px;">[X]</button>
@@ -176,19 +176,19 @@ export class KanbanBoard {
       card.addEventListener('mousedown', (e) => {
         // Left click only, ignore if clicking delete button
         if (e.button !== 0 || e.target.closest('.delete-task-btn')) return;
-        
+
         e.stopPropagation(); // Block bubbling to bezel to prevent window drag conflicts!
         e.preventDefault();  // Prevent default text selection dragging
-        
+
         const taskId = card.dataset.id;
         const rect = card.getBoundingClientRect();
-        
+
         const screen = document.querySelector('.crt-screen');
         const screenRect = screen.getBoundingClientRect();
-        
+
         const offsetX = e.clientX - rect.left;
         const offsetY = e.clientY - rect.top;
-        
+
         // Create a beautiful floating clone of the card inside the screen context
         const clone = card.cloneNode(true);
         clone.style.position = 'absolute';
@@ -203,22 +203,22 @@ export class KanbanBoard {
         clone.style.boxShadow = '5px 5px 10px rgba(0,0,0,0.35)';
         clone.style.cursor = 'move';
         screen.appendChild(clone);
-        
+
         // Hide the original card
         card.style.visibility = 'hidden';
         window.isDraggingTask = true;
-        
+
         let currentHoveredCol = null;
         let currentHoveredBarrier = null;
 
         const onMouseMove = (moveEvent) => {
           clone.style.left = (moveEvent.clientX - screenRect.left - offsetX) + 'px';
           clone.style.top = (moveEvent.clientY - screenRect.top - offsetY) + 'px';
-          
+
           // Detect element currently under mouse pointer
           const elementUnder = document.elementFromPoint(moveEvent.clientX, moveEvent.clientY);
           if (!elementUnder) return;
-          
+
           // Check columns
           const col = elementUnder.closest('.kanban-column');
           if (col) {
@@ -233,7 +233,7 @@ export class KanbanBoard {
               currentHoveredCol = null;
             }
           }
-          
+
           // Check barriers (Timer or Music panels)
           const barrierPanel = elementUnder.closest('#timer-panel, #music-panel');
           if (barrierPanel) {
@@ -249,17 +249,17 @@ export class KanbanBoard {
             }
           }
         };
-        
+
         const onMouseUp = () => {
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('mouseup', onMouseUp);
-          
+
           if (screen.contains(clone)) {
             screen.removeChild(clone);
           }
           card.style.visibility = 'visible';
           window.isDraggingTask = false;
-          
+
           if (currentHoveredCol) {
             currentHoveredCol.classList.remove('drag-over');
             const status = currentHoveredCol.dataset.status;
@@ -270,12 +270,12 @@ export class KanbanBoard {
               this.render();
             }
           }
-          
+
           if (currentHoveredBarrier) {
             currentHoveredBarrier.classList.remove('drag-barrier');
           }
         };
-        
+
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
       });
@@ -285,7 +285,7 @@ export class KanbanBoard {
 
 export function runKanbanTests() {
   console.log("Running Kanban tests...");
-  const mockBroker = { subscribe: () => {}, publish: () => {} };
+  const mockBroker = { subscribe: () => { }, publish: () => { } };
   const board = new KanbanBoard(document.createElement('div'), mockBroker);
   // Assert 1: Inisialisasi awal memiliki 2 tugas
   if (board.tasks.length === 0) {

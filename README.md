@@ -23,7 +23,11 @@ Anda dapat langsung mengunduh berkas instalasi resmi **TUMIS** untuk Windows (64
 
 <p align="center">
   <a href="https://github.com/zidanLPTP/TumisApp/raw/master/release/Tumis_Setup_x64.msi">
-    <img src="https://img.shields.io/badge/Download_Installer-Windows_x64-ffbc00?style=for-the-badge&logo=windows&logoColor=black&labelColor=white" alt="Unduh Tumis Setup MSI" height="40"/>
+    <img src="https://img.shields.io/badge/Download_MSI-Windows_x64-ffbc00?style=for-the-badge&logo=windows&logoColor=black&labelColor=white" alt="Unduh Tumis Setup MSI" height="40"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/zidanLPTP/TumisApp/raw/master/release/Tumis_Setup_x64.exe">
+    <img src="https://img.shields.io/badge/Download_EXE-Windows_x64-5dfc5d?style=for-the-badge&logo=windows&logoColor=black&labelColor=white" alt="Unduh Tumis Setup EXE" height="40"/>
   </a>
 </p>
 

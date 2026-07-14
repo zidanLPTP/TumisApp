@@ -12,10 +12,28 @@ export class MusicPlayer {
     
     // HTML5 Audio Element
     this.audio = new Audio();
+    this.isSeeking = false;
     
     // Auto play next when track ends
     this.audio.addEventListener('ended', () => {
       this.playNext();
+    });
+
+    // Update progress bar as audio plays
+    this.audio.addEventListener('timeupdate', () => {
+      this.updateCurrentTimeDisplay();
+      const slider = this.container.querySelector('#seek-slider');
+      if (slider && this.audio.duration && !this.isSeeking) {
+        slider.value = (this.audio.currentTime / this.audio.duration) * 100;
+      }
+    });
+
+    this.audio.addEventListener('loadedmetadata', () => {
+      this.updateDurationDisplay();
+      const slider = this.container.querySelector('#seek-slider');
+      if (slider) {
+        slider.removeAttribute('disabled');
+      }
     });
 
     // Listen to timer events
@@ -89,6 +107,17 @@ export class MusicPlayer {
     
     // Update displayed title
     this.container.querySelector('.current-song-title').innerText = track.name;
+
+    // Reset seek slider and times
+    const slider = this.container.querySelector('#seek-slider');
+    if (slider) {
+      slider.value = 0;
+      slider.setAttribute('disabled', 'true');
+    }
+    const curTimeEl = this.container.querySelector('.music-time-current');
+    if (curTimeEl) curTimeEl.innerText = "00:00";
+    const durTimeEl = this.container.querySelector('.music-time-duration');
+    if (durTimeEl) durTimeEl.innerText = "00:00";
     
     // Convert local filepath to asset URL
     if (window.__TAURI__) {
@@ -300,6 +329,27 @@ export class MusicPlayer {
     this.loadTrack(this.currentTrackIndex);
   }
 
+  formatTime(secs) {
+    if (isNaN(secs) || secs === Infinity) return "00:00";
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = Math.floor(secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  updateCurrentTimeDisplay() {
+    const curTimeEl = this.container.querySelector('.music-time-current');
+    if (curTimeEl) {
+      curTimeEl.innerText = this.formatTime(this.audio.currentTime);
+    }
+  }
+
+  updateDurationDisplay() {
+    const durTimeEl = this.container.querySelector('.music-time-duration');
+    if (durTimeEl) {
+      durTimeEl.innerText = this.formatTime(this.audio.duration);
+    }
+  }
+
   render() {
     this.container.innerHTML = `
       <div style="display:flex; flex-direction:column; gap:10px; height:100%;">
@@ -324,10 +374,17 @@ export class MusicPlayer {
           </div>
         </div>
 
-        <!-- Song info -->
-        <div style="border:2px solid #1a1a1a; padding:6px; background:#fff; font-size:11px; min-height:36px; display:flex; flex-direction:column; justify-content:center; box-sizing:border-box;">
+        <!-- Song info & Progress -->
+        <div style="border:2px solid #1a1a1a; padding:6px; background:#fff; font-size:11px; display:flex; flex-direction:column; gap:4px; box-sizing:border-box;">
           <div style="font-size:9px; font-weight:bold; color:#777; font-family:'Share Tech Mono', monospace;">NOW PLAYING:</div>
           <div class="current-song-title" style="font-weight:bold; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">(Tidak ada lagu)</div>
+          
+          <!-- Seek bar slider -->
+          <div style="display:flex; align-items:center; gap:6px; font-size:9px; font-family:'Share Tech Mono', monospace; margin-top:2px;">
+            <span class="music-time-current">00:00</span>
+            <input type="range" id="seek-slider" min="0" max="100" value="0" style="flex-grow:1; height:6px; accent-color:#1a1a1a; cursor:pointer;" disabled>
+            <span class="music-time-duration">00:00</span>
+          </div>
         </div>
 
         <!-- Controls -->
@@ -394,6 +451,23 @@ export class MusicPlayer {
     const slider = this.container.querySelector('#volume-slider');
     slider.oninput = (e) => this.setVolume(e.target.value);
     this.setVolume(slider.value);
+
+    // Seek bar bindings
+    const seekSlider = this.container.querySelector('#seek-slider');
+    seekSlider.oninput = (e) => {
+      this.isSeeking = true;
+      const curTimeEl = this.container.querySelector('.music-time-current');
+      if (curTimeEl && this.audio.duration) {
+        const tempTime = (e.target.value / 100) * this.audio.duration;
+        curTimeEl.innerText = this.formatTime(tempTime);
+      }
+    };
+    seekSlider.onchange = (e) => {
+      if (this.audio.duration) {
+        this.audio.currentTime = (e.target.value / 100) * this.audio.duration;
+      }
+      this.isSeeking = false;
+    };
 
     // Shuffle & Repeat buttons
     const shuffleBtn = this.container.querySelector('#btn-shuffle');
